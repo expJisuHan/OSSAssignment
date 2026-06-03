@@ -2,7 +2,11 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    classification_report
+)
 
 data = load_breast_cancer()
 
@@ -13,6 +17,7 @@ print("입력 데이터 형태:", X.shape)
 print("타겟 데이터 형태:", y.shape)
 print("특성 이름 개수:", len(data.feature_names))
 print("클래스 이름:", data.target_names)
+
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -41,3 +46,17 @@ print(y_test)
 
 print("\n예측값:")
 print(y_pred)
+
+cm = confusion_matrix(y_test, y_pred)
+
+print("\n[Confusion Matrix]")
+print(cm)
+
+print("\n[Classification Report]")
+print(
+    classification_report(
+        y_test,
+        y_pred,
+        target_names=data.target_names
+    )
+)
